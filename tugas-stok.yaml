@@ -4,10 +4,16 @@ info:
   title: My Apps
   description: this is a description
   version: 1.0.0-beta
+
+servers:
+  - url: https://test.com
+    description: staging
   
 tags:
-  - name: Customer
+  - name: User
   - name: Auth
+  - name: Product
+  - name: Transaction
 
 paths:
   '/api/login':
@@ -60,8 +66,31 @@ paths:
                   rescode:
                     type: number
                     example: 402
-  '/api/getprofile/{id}':
     get:
+      summary: this is a get login
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: success response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/success200"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                            example: kjasldkjalksdjalkjdlaksjdkalj
+
+  '/api/user/{id}':
+    get:
+      security:
+        - BearerAuth: []
       summary: this is a get profile
       parameters:
         - name: id
@@ -69,8 +98,6 @@ paths:
           required: true
           schema:
             type: string
-      security:
-        - BearerAuth: []
       tags:
         - Customer
       responses:
@@ -91,6 +118,25 @@ paths:
                               example: kjasldkjalksdjalkjdlaksjdkalj
         '402':
           $ref: "#/components/responses/402badrequest"
+    update:
+    delete:
+  '/api/user':
+    post:
+      summary: this is a create user endpoint
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postUser"
+      responses:
+        '200':
+          description: success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseSingleUser"
 
 components:
   schemas:

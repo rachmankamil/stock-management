@@ -19,7 +19,6 @@ type Config struct {
 }
 
 var Conf Config
-var DB *gorm.DB
 
 func Init() {
 	Conf = Config{
@@ -31,10 +30,9 @@ func Init() {
 		JWTSecret: os.Getenv("JWTSECRET"),
 	}
 	fmt.Printf("%+v", Conf)
-	DBInit()
 }
 
-func DBInit() {
+func DBInit() (DB *gorm.DB) {
 	DB, _ = gorm.Open(
 		mysql.Open(
 			fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
@@ -46,4 +44,5 @@ func DBInit() {
 			),
 		),
 	)
+	return
 }
