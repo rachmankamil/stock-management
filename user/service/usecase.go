@@ -26,6 +26,7 @@ func (userService) InsertData(domain domain.User) (response domain.User, err err
 }
 
 func NewUserService(repo domain.Repository) domain.Service {
+
 	return userService{
 		repository: repo,
 	}

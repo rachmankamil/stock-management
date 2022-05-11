@@ -8,6 +8,7 @@ type User struct {
 	Fullname string
 	DOB      time.Time
 	Product  []Product
+	Gender   string
 }
 
 type Product struct {

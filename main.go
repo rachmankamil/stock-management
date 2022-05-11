@@ -18,6 +18,8 @@ func main() {
 	e := echo.New()
 
 	e.GET("/healthcheck", user.HealthCheck)
+	e.POST("/user", user.AddUser)
+	e.POST("/ro", user.GetCost)
 
 	e.Start(":8080")
 }
